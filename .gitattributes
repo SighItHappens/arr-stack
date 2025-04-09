@@ -1,0 +1,2 @@
+arr-stack/recyclarr/recyclarr.yml filter=stripsecrets
+arr-stack/recyclarr/settings.yml filter=stripsecrets
