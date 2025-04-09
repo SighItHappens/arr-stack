@@ -6,73 +6,91 @@ services:
     command: ["sonarr"]
     environment:
       PORT: 9707
-      URL: "http://192.168.50.102:8989"
+      URL: "http://sonarr:8989"
       APIKEY: ${SONARR_API_KEY}
       ENABLE_ADDITIONAL_METRICS: true
     ports:
       - "9707:9707"
     restart: unless-stopped
+    networks:
+      - arr-network
+      - default
   radarr-exporter:
     image: ghcr.io/onedr0p/exportarr:v2.0
     container_name: radarr-exporter
     command: ["radarr"]
     environment:
       PORT: 9708
-      URL: "http://192.168.50.102:7878"
+      URL: "http://radarr:7878"
       APIKEY: ${RADARR_API_KEY}
     ports:
       - "9708:9708"
     restart: unless-stopped
+    networks:
+      - arr-network
+      - default
   lidarr-exporter:
     image: ghcr.io/onedr0p/exportarr:v2.0
     container_name: lidarr-exporter
     command: ["lidarr"]
     environment:
       PORT: 9709
-      URL: "http://192.168.50.102:8686"
+      URL: "http://lidarr:8686"
       APIKEY: ${LIDARR_API_KEY}
     ports:
       - "9709:9709"
     restart: unless-stopped
+    networks:
+      - arr-network
+      - default
   prowlarr-exporter:
     image: ghcr.io/onedr0p/exportarr:v2.0
     container_name: prowlarr-exporter
     command: ["prowlarr"]
     environment:
       PORT: 9710
-      URL: "http://192.168.50.102:9696"
+      URL: "http://prowlarr:9696"
       APIKEY: ${PROWLARR_API_KEY}
     ports:
      - "9710:9710"
     restart: unless-stopped
+    networks:
+      - arr-network
+      - default
   readarr-exporter:
     image: ghcr.io/onedr0p/exportarr:v2.0
     container_name: readarr-exporter
     command: ["readarr"]
     environment:
       PORT: 9711
-      URL: "http://192.168.50.102:8787"
+      URL: "http://readarr:8787"
       APIKEY: ${READARR_API_KEY}
     ports:
       - "9711:9711"
     restart: unless-stopped
+    networks:
+      - arr-network
+      - default
   deluge-exporter:
     image: ngosang/deluge-exporter:latest
     container_name: deluge-exporter
     environment:
       TZ: Etc/UTC
-      DELUGE_URL: http://192.168.50.102:8112
+      DELUGE_URL: http://deluge:8112
       DELUGE_PASSWORD: ${DELUGE_PASS}
       LOG_LEVEL: INFO
     ports:
       - "8011:8011"
     restart: unless-stopped
+    networks:
+      - arr-network
+      - default
   pihole-exporter:
     image: ekofr/pihole-exporter:latest
     container_name: pihole-exporter
     environment:
       PIHOLE_PROTOCOL: https
-      PIHOLE_HOSTNAME: pihole.frugalbotanists.com
+      PIHOLE_HOSTNAME: ${PIHOLE_HOSTNAME}
       PIHOLE_PASSWORD: ${PIHOLE_PASS}
       PIHOLE_PORT: 443
       PORT: 9617
@@ -81,3 +99,10 @@ services:
     ports:
       - "9617:9617"
     restart: unless-stopped
+    networks:
+      - default
+networks:
+  default:
+    name: monitoring-network
+  arr-network:
+    external: true
