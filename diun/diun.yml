@@ -1,0 +1,18 @@
+watch:
+  schedule: "0 */6 * * *"
+  firstCheckNotif: true
+
+defaults:
+  notifyOn:
+    - new
+    - update
+
+notif:
+  discord:
+    webhookURLFile: discord_webhook_url.txt
+    renderFields: true
+
+providers:
+  docker:
+    watchStopped: true
+    watchByDefault: true
