@@ -12,6 +12,9 @@ services:
     ports:
       - "9707:9707"
     restart: unless-stopped
+    networks:
+      - arr-network
+      - default
   radarr-exporter:
     image: ghcr.io/onedr0p/exportarr:v2.0
     container_name: radarr-exporter
@@ -23,6 +26,9 @@ services:
     ports:
       - "9708:9708"
     restart: unless-stopped
+    networks:
+      - arr-network
+      - default
   lidarr-exporter:
     image: ghcr.io/onedr0p/exportarr:v2.0
     container_name: lidarr-exporter
@@ -34,6 +40,9 @@ services:
     ports:
       - "9709:9709"
     restart: unless-stopped
+    networks:
+      - arr-network
+      - default
   prowlarr-exporter:
     image: ghcr.io/onedr0p/exportarr:v2.0
     container_name: prowlarr-exporter
@@ -45,6 +54,9 @@ services:
     ports:
      - "9710:9710"
     restart: unless-stopped
+    networks:
+      - arr-network
+      - default
   readarr-exporter:
     image: ghcr.io/onedr0p/exportarr:v2.0
     container_name: readarr-exporter
@@ -56,6 +68,9 @@ services:
     ports:
       - "9711:9711"
     restart: unless-stopped
+    networks:
+      - arr-network
+      - default
   deluge-exporter:
     image: ngosang/deluge-exporter:latest
     container_name: deluge-exporter
@@ -67,6 +82,9 @@ services:
     ports:
       - "8011:8011"
     restart: unless-stopped
+    networks:
+      - arr-network
+      - default
   pihole-exporter:
     image: ekofr/pihole-exporter:latest
     container_name: pihole-exporter
@@ -81,3 +99,10 @@ services:
     ports:
       - "9617:9617"
     restart: unless-stopped
+    networks:
+      - default
+networks:
+  default:
+    name: monitoring-network
+  arr-network:
+    external: true

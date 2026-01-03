@@ -131,3 +131,10 @@ services:
       - TZ=Etc/UTC
       - RECYCLARR_CREATE_CONFIG=true
     restart: unless-stopped
+networks:
+  default:
+    name: arr-network
+    ipam:
+      config:
+        - subnet: 192.20.0.0/16
+          gateway: 192.20.0.1
