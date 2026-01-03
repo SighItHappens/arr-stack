@@ -57,20 +57,6 @@ services:
     networks:
       - arr-network
       - default
-  readarr-exporter:
-    image: ghcr.io/onedr0p/exportarr:v2.0
-    container_name: readarr-exporter
-    command: ["readarr"]
-    environment:
-      PORT: 9711
-      URL: "http://${DOCKER_HOST}:8787"
-      APIKEY: ${READARR_API_KEY}
-    ports:
-      - "9711:9711"
-    restart: unless-stopped
-    networks:
-      - arr-network
-      - default
   deluge-exporter:
     image: ngosang/deluge-exporter:latest
     container_name: deluge-exporter

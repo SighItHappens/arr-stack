@@ -40,20 +40,6 @@ services:
     ports:
       - 9696:9696
     restart: unless-stopped
-  readarr:
-    image: lscr.io/linuxserver/readarr:develop
-    container_name: readarr
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Etc/UTC
-    volumes:
-      - ${HOME_DIR}/arr-stack/readarr/data:/config
-      - /mnt/media/Books:/books
-      - /mnt/media/downloads:/downloads
-    ports:
-      - 8787:8787
-    restart: unless-stopped
   lidarr:
     image: lscr.io/linuxserver/lidarr:latest
     container_name: lidarr
@@ -130,6 +116,18 @@ services:
     environment:
       - TZ=Etc/UTC
       - RECYCLARR_CREATE_CONFIG=true
+    restart: unless-stopped
+  maintainerr:
+    image: ghcr.io/maintainerr/maintainerr:latest
+    user: 1000:1000
+    volumes:
+      - type: bind
+        source: ${HOME_DIR}/arr-stack/maintainerr
+        target: /opt/data
+    environment:
+      - TZ=Etc/UTC
+    ports:
+      - 6246:6246
     restart: unless-stopped
 networks:
   default:
