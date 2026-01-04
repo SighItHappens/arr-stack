@@ -7,6 +7,7 @@ services:
     volumes:
       - "./data:/data"
       - "./diun.yml:/diun.yml:ro"
+      - "./discord_webhook_url.txt:/discord_webhook_url.txt:ro"
       - "/var/run/docker.sock:/var/run/docker.sock"
     environment:
       TZ: Etc/UTC
