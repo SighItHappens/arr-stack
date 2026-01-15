@@ -28,6 +28,20 @@ services:
     ports:
       - 7878:7878
     restart: unless-stopped
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:latest
+    container_name: bazarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - ${HOME_DIR}/arr-stack/bazarr/data:/config
+      - /mnt/media/Movies:/movies
+      - "/mnt/media/TV Shows:/tv"
+    ports:
+      - 6767:6767
+    restart: unless-stopped
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
     container_name: prowlarr
@@ -119,6 +133,7 @@ services:
     restart: unless-stopped
   maintainerr:
     image: ghcr.io/maintainerr/maintainerr:latest
+    container_name: maintainerr
     user: 1000:1000
     volumes:
       - type: bind
